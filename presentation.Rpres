@@ -1,0 +1,53 @@
+Regression Line and Confidence Interval of mtcars dataset
+========================================================
+author: Marcel Man
+date: `r Sys.Date()`
+autosize: true
+
+Summary
+========================================================
+The application uses the mtcars dataset and tries to shows the regression line of mpg and its confidence interval under different scenarios. 
+```{r}
+head(mtcars)
+```
+
+Inputs
+========================================================
+The available input options of the application are:
+- Confidence Interval of the regression line
+- Number of cylinders in the mtcar dataset
+
+Output
+========================================================
+With the selected input, the application plots a scatter plot of the data points, and the regression line with the confidence interval in the dataset. Then we use ggplot to use the datapoints, regression line and confidence interval.
+
+```{r eval=FALSE}
+shinyServer(function(input, output) {
+
+    getData <- reactive({
+        data <- mtcars
+        if (input$four == FALSE) {
+            data <- data[data$cyl != 4,]
+        }
+        if (input$six == FALSE) {
+            data <- data[data$cyl != 6,]
+        }
+        if (input$eight == FALSE) {
+            data <- data[data$cyl != 8,]
+        }
+        data
+    })
+
+    output$plot <- renderPlot({
+        ggplot(data=getData(), aes(wt, mpg)) + geom_point(aes(color=factor(cyl))) + geom_smooth(method="lm", level=input$conf)
+    })
+
+})
+```
+
+
+Appendix
+========================================================
+For more details on the application please visit <https://marcelman.shinyapps.io/DataProducts_CourseProject/>.
+
+
