@@ -796,11 +796,25 @@ Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
 <p>With the selected input, the application plots a scatter plot of the data points, and the regression line with the confidence interval in the dataset. Then we use ggplot to use the datapoints, regression line and confidence interval.</p>
 
 <pre><code class="r">shinyServer(function(input, output) {
-    ... 
-    output$plot &lt;- renderPlot({
-        ggplot(data=getData(), aes(wt, mpg)) + geom_point(aes(color=factor(cyl))) + geom_smooth(method=&quot;lm&quot;, level=input$conf)
+    getData &lt;- reactive({
+        data &lt;- mtcars
+        if (input$four == FALSE) {
+            data &lt;- data[data$cyl != 4,]
+        }
+        if (input$six == FALSE) {
+            data &lt;- data[data$cyl != 6,]
+        }
+        if (input$eight == FALSE) {
+            data &lt;- data[data$cyl != 8,]
+        }
+        data
     })
 
+    output$plot &lt;- renderPlot({
+        ggplot(data=getData(), aes(wt, mpg)) 
+      + geom_point(aes(color=factor(cyl))) 
+      + geom_smooth(method=&quot;lm&quot;, level=input$conf)
+    })
 })
 </code></pre>
 
