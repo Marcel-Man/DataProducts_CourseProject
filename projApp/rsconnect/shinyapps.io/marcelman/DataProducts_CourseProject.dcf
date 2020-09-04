@@ -1,0 +1,12 @@
+name: DataProducts_CourseProject
+title: DataProducts_CourseProject
+username:
+account: marcelman
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2753619
+bundleId: 3592523
+url: https://marcelman.shinyapps.io/DataProducts_CourseProject/
+when: 1599219186.74386
+asMultiple: FALSE
+asStatic: FALSE
