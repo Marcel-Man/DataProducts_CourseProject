@@ -2,7 +2,8 @@ Regression Line and Confidence Interval of mtcars dataset
 ========================================================
 author: Marcel Man
 date: 2020-09-04
-autosize: true
+width: 1440
+height: 900
 
 Summary
 ========================================================
@@ -35,21 +36,7 @@ With the selected input, the application plots a scatter plot of the data points
 
 ```r
 shinyServer(function(input, output) {
-
-    getData <- reactive({
-        data <- mtcars
-        if (input$four == FALSE) {
-            data <- data[data$cyl != 4,]
-        }
-        if (input$six == FALSE) {
-            data <- data[data$cyl != 6,]
-        }
-        if (input$eight == FALSE) {
-            data <- data[data$cyl != 8,]
-        }
-        data
-    })
-
+    ... 
     output$plot <- renderPlot({
         ggplot(data=getData(), aes(wt, mpg)) + geom_point(aes(color=factor(cyl))) + geom_smooth(method="lm", level=input$conf)
     })
